@@ -1,0 +1,43 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<h1 class="display-4 text-center">Welcome! <strong>{{users.username}}</strong></h1>
+
+
+<div class='text-center'>
+
+        <p>
+            <form style='display:inline'  action='/users/{{users.username}}/delete' method='POST'>
+            <i class='fas fa-user'></i> {{users.first_name}} {{users.last_name}}
+                <button class='btn btn-sm btn-danger'><i class="fas fa-trash"></i></button>
+            </form>
+        </p>
+        <p><i class='fas fa-envelope'></i> {{users.email}}</p>
+
+</div>
+    <ul>
+    {% for feedback in users.feedback%}
+    <div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title justify-content-between">
+                    <a class="text-info" href="/feedback/{{feedback.id}}/update">{{feedback.title}}</a>
+                    {% if session['username']== users.username %}
+                    <form style='display:inline'  action='/feedback/{{feedback.id}}/delete' method='POST'>
+                        <button class='btn btn-sm btn-danger flex-row float-right'><i class="fas fa-trash"></i></button>
+                    </form>
+                    {% endif %}
+                </h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <form class='text-center mt-3' action="/users/{{users.username}}/feedback/add">
+        <button class="btn btn-sm btn-success"><i class="fas fa-plus"></i></button>
+    </form>
+    
+</ul>
+
+
+{% endblock %}
